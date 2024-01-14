@@ -1,8 +1,11 @@
 const mongoose = require("mongoose");
 const { Schema, model } = mongoose;
+const bcrypt = require('bcrypt');
 
 const userSchema = new Schema({
   username: { type: String, required: true, unique: true },
+  facebookId:String,
+  googleId:String,
   email: {
     type: String,
     required: true,
@@ -10,7 +13,7 @@ const userSchema = new Schema({
     match: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
     lowercase: true,
   },
-  password: { type: String, required: true },
+  password: { type: String },
   homeLocation: {
     type: {
       type: String,
@@ -19,9 +22,8 @@ const userSchema = new Schema({
     },
     coordinates: {
       type: [Number],
-      required: true,
     },
-    address: { type: String, required: true },
+    address: { type: String},
   },
   destinationLocation: {
     type: {
@@ -31,12 +33,11 @@ const userSchema = new Schema({
     },
     coordinates: {
       type: [Number],
-      required: true,
     },
-    address: { type: String, required: true },
+    address: { type: String },
   },
-  travelDate: { type: Date, required: true },
-  age: { type: Number, required: true },
+  travelDate: { type: Date},
+  age: { type: Number },
   sex: { type: String, enum: ["Male", "Female", "Non-Binary"] },
   interests: {
     type: [
@@ -54,22 +55,10 @@ const userSchema = new Schema({
           "Technology",
           "History & Culture",
           "Adventure Seeker",
-          "Photography","Nature","Science"
+          "Photography",
+          "Nature",
+          "Science",
         ],
-      },
-    ],
-    validate: [
-      {
-        validator: function (interests) {
-          return interests.length >= 3;
-        },
-        message: "At least 3 interests are required.",
-      },
-      {
-        validator: function (interests) {
-          return interests.length <= 5;
-        },
-        message: "No more than 5 interests are allowed.",
       },
     ],
     default: [],
@@ -93,6 +82,24 @@ const userSchema = new Schema({
 userSchema.index({
   "homeLocation.coordinates": "2dsphere",
   "destinationLocation.coordinates": "2dsphere",
+});
+
+userSchema.methods.verifyPassword = async function (password) {
+  return await bcrypt.compare(password, this.password);
+};
+
+userSchema.pre('save', async function (next) {
+  if (this.isModified('password')) {
+    try {
+      const hashedPassword = await bcrypt.hash(this.password, 10);
+      this.password = hashedPassword;
+      next();
+    } catch (error) {
+      next(error);
+    }
+  } else {
+    next();
+  }
 });
 
 userSchema.statics.Empty = async function () {

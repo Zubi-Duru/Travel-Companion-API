@@ -4,54 +4,54 @@ const { User } = require("../../models/userModel");
 const userValidationSchema = require("../joiSchema");
 
 // Add a user
-const addUser = tryCatch(async (req, res) => {
-  let userData = req.body;
+// const addUser = tryCatch(async (req, res) => {
+//   let userData = req.body;
 
-  // If userData is not an array, convert it to an array
-  if (!Array.isArray(userData)) {
-    userData = [userData];
-  }
+//   // If userData is not an array, convert it to an array
+//   if (!Array.isArray(userData)) {
+//     userData = [userData];
+//   }
 
-  // Validate each user data using Joi
-  const users = [];
-  userData.forEach((user) => {
-    const { error, value } = userValidationSchema.validate(user, {
-      abortEarly: false,
-    });
-    if (error) {
-      console.log(error);
-      throw {
-        custom: {
-          error: error.details.map((detail) => detail.message).join(", "),
-        },
-      };
-    }
-    users.push(value);
-  });
+//   // Validate each user data using Joi
+//   const users = [];
+//   userData.forEach((user) => {
+//     const { error, value } = userValidationSchema.validate(user, {
+//       abortEarly: false,
+//     });
+//     if (error) {
+//       console.log(error);
+//       throw {
+//         custom: {
+//           error: error.details.map((detail) => detail.message).join(", "),
+//         },
+//       };
+//     }
+//     users.push(value);
+//   });
 
-  // Create the users
-  const newUsers = await User.create(users);
+//   // Create the users
+//   const newUsers = await User.create(users);
 
-  res.status(201).json(newUsers);
+//   res.status(201).json(newUsers);
 
-  // const userData = req.body;
-  // // Validate user data using Joi
-  // const { error, value } = userValidationSchema.validate(userData, {
-  //   abortEarly: false,
-  // });
-  // if (error) {
-  //   console.log(error)
-  //   throw {
-  //     custom: {
-  //       error: error.details.map((detail) => detail.message).join(", "),
-  //     },
-  //   };
-  // }
+//   // const userData = req.body;
+//   // // Validate user data using Joi
+//   // const { error, value } = userValidationSchema.validate(userData, {
+//   //   abortEarly: false,
+//   // });
+//   // if (error) {
+//   //   console.log(error)
+//   //   throw {
+//   //     custom: {
+//   //       error: error.details.map((detail) => detail.message).join(", "),
+//   //     },
+//   //   };
+//   // }
 
-  // // Create the user
-  // const newUser = await User.create(value);
-  // res.status(201).json(value);
-}, "Could not add user");
+//   // // Create the user
+//   // const newUser = await User.create(value);
+//   // res.status(201).json(value);
+// }, "Could not add user");
 
 const getAllUsers = tryCatch(async (req, res) => {
   // User.Empty()
@@ -118,7 +118,7 @@ const deleteUser = tryCatch(async (req, res) => {
 }, "Could not delete user");
 
 
-exports.addUser=addUser
+// exports.addUser=addUser
 exports.getAllUsers=getAllUsers
 exports.getUser=getUser
 exports.updateUser=updateUser

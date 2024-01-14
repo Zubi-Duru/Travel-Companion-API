@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const {
-  addUser,
+  // addUser,
   getUser,
   getAllUsers,
   updateUser,
@@ -12,7 +12,7 @@ const {
 
 router.get("/users/:id", getUser);
 router.get("/users", getAllUsers);
-router.post("/users", addUser);
+// router.post("/users", addUser);
 router.patch("/users/:id", updateUser);
 router.delete("/users/:id", deleteUser);
 

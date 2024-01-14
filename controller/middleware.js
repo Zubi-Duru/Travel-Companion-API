@@ -2,10 +2,10 @@ const { tryCatch } = require("./utils")
 const { User } = require("../models/userModel")
 
 const checkLogin = async (req) => {
-    if(!req.session._id){
+    if(!req.user){
         throw new Error()
     }
-    const dbResponse=await User.findById(req.session._id)
+    const dbResponse=await User.findById(req.user)
     if(!dbResponse){
         throw {custom:{error:"user not found"}}
     }
