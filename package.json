@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "connect-mongodb-session": "^3.1.1",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "fastpriorityqueue": "^0.7.4",
+    "joi": "^17.11.0",
+    "mongoose": "^6.12.5",
+    "sanitize-html": "^2.11.0"
+  }
+}
