@@ -3,7 +3,7 @@ const { User } = require("../../models/userModel");
 const PriorityQueue = require('fastpriorityqueue');
 
 const getRelatedUsers = async (req, res) => {
-  const currentUserId = "65a2f68ea682d3bdbec8425b"; //req.user._id
+  const currentUserId =  req.user._id
   const currentUser = await User.findById(currentUserId);
 
   if (!currentUser) {
@@ -22,12 +22,12 @@ const getRelatedUsers = async (req, res) => {
           _id: { $ne: currentUserId },
           'destinationLocation.coordinates': {
             $geoWithin: {
-              $centerSphere: [currentUser.homeLocation.coordinates, 100 / 6371], // 100 kilometers converted to radians
+              $centerSphere: [currentUser.destinationLocation.coordinates, 100 / 6371], // 100 kilometers converted to radians
             },
           },
           travelDate: {
-            $gte: new Date(),
-            $lte: new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000),
+            $gte: new Date(currentUser.travelDate.getTime() - 7 * 24 * 60 * 60 * 1000), // 7 days before currentUser.travelDate
+            $lte: new Date(currentUser.travelDate.getTime() + 7 * 24 * 60 * 60 * 1000), // 7 days after currentUser.travelDate
           },
         },
       },

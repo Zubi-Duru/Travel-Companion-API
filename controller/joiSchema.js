@@ -23,12 +23,12 @@ const extension = (joi) => ({
 
 const Joi = BaseJoi.extend(extension);
 
-const emailValidation = Joi.string().email().required().messages({
+const emailValidation = Joi.string().email().messages({
   'string.email': 'Invalid email format',
   'any.required': 'Email is required',
 });
 
-const passwordValidation = Joi.string().required().messages({
+const passwordValidation = Joi.string().messages({
   'any.required': 'Password is required',
 });
 
@@ -66,7 +66,7 @@ const friendsValidation = Joi.array().items(Joi.string().pattern(/^[0-9a-fA-F]{2
 const pendingFriendsValidation = Joi.array().items(Joi.string().pattern(/^[0-9a-fA-F]{24}$/)).default([]);
 
 const userValidationSchema = Joi.object({
-  username: Joi.string().required().messages({
+  username: Joi.string().messages({
     'any.required': 'Username is required',
   }),
   email: emailValidation,

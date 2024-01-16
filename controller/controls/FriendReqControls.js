@@ -5,7 +5,7 @@ const userValidationSchema = require("../joiSchema");
 
 const sendFriendReq = tryCatch(async (req, res) => {
   const { id } = req.params;
-  const senderUserId = "65a2f68ea682d3bdbec8425b"; // Assuming you have user information in req.user
+  const senderUserId =  req.user._id; // Assuming you have user information in req.user
   // Validate user ID and sender user ID
   if (
     !mongoose.Types.ObjectId.isValid(id) ||
@@ -41,7 +41,7 @@ const sendFriendReq = tryCatch(async (req, res) => {
 
 const rejectFriendReq = tryCatch(async (req, res) => {
   const { id } = req.params;
-  const currentUserID = "65a2f68ea682d3bdbec84258"; // Assuming you have user information in req.user
+  const currentUserID = req.user._id; // Assuming you have user information in req.user
   // Validate user ID and current user ID
   if (
     !mongoose.Types.ObjectId.isValid(id) ||
@@ -67,7 +67,7 @@ const rejectFriendReq = tryCatch(async (req, res) => {
 
 const acceptFriendReq = tryCatch(async (req, res) => {
   const { id } = req.params;
-  const currentUserID = "65a2f68ea682d3bdbec84258"; // Assuming you have user information in req.user
+  const currentUserID =  req.user._id; // Assuming you have user information in req.user
   // Validate user ID and current user ID
   if (
     !mongoose.Types.ObjectId.isValid(id) ||
@@ -101,7 +101,7 @@ const acceptFriendReq = tryCatch(async (req, res) => {
 
 const removeFriend = tryCatch(async (req, res) => {
   const { id } = req.params;
-  const currentUserID = "65a2f68ea682d3bdbec84258"; // Assuming you have user information in req.user
+  const currentUserID = req.user._id; // Assuming you have user information in req.user
   // Validate user ID and current user ID
   if (
     !mongoose.Types.ObjectId.isValid(id) ||
@@ -136,7 +136,7 @@ const removeFriend = tryCatch(async (req, res) => {
 }, "Could not remove friend");
 
 const getPendingFriends = tryCatch(async (req, res) => {
-  const currentUserID = "65a2f68ea682d3bdbec84258"; // Assuming you have user information in req.user req.user._id
+  const currentUserID =  req.user._id ; // Assuming you have user information in req.user req.user._id
   // Validate current user ID
   if (!mongoose.Types.ObjectId.isValid(currentUserID)) {
     throw { custom: { error: "Invalid user ID" } };
