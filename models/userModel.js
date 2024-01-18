@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 const { Schema, model } = mongoose;
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 
 const userSchema = new Schema({
   username: { type: String, required: true, unique: true },
-  facebookId:String,
-  googleId:String,
+  facebookId: String,
+  googleId: String,
   email: {
     type: String,
     required: true,
@@ -23,7 +23,7 @@ const userSchema = new Schema({
     coordinates: {
       type: [Number],
     },
-    address: { type: String},
+    address: { type: String },
   },
   destinationLocation: {
     type: {
@@ -36,7 +36,7 @@ const userSchema = new Schema({
     },
     address: { type: String },
   },
-  travelDate: { type: Date},
+  travelDate: { type: Date },
   age: { type: Number },
   sex: { type: String, enum: ["Male", "Female", "Non-Binary"] },
   interests: {
@@ -63,6 +63,11 @@ const userSchema = new Schema({
     ],
     default: [],
   },
+  relationship: {
+    type: String,
+    enum: ["Single", "Married"],
+    default: "Single",
+  },
   about: { type: String },
   friends: [
     {
@@ -88,8 +93,8 @@ userSchema.methods.verifyPassword = async function (password) {
   return await bcrypt.compare(password, this.password);
 };
 
-userSchema.pre('save', async function (next) {
-  if (this.isModified('password')) {
+userSchema.pre("save", async function (next) {
+  if (this.isModified("password")) {
     try {
       const hashedPassword = await bcrypt.hash(this.password, 10);
       this.password = hashedPassword;

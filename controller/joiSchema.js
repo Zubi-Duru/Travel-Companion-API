@@ -59,6 +59,11 @@ const interestsValidation = Joi.array().items(Joi.string().valid(
   'Music', 'Party', 'Technology', 'History & Culture', 'Adventure Seeker', 'Photography', "Nature","Science"
 )).min(3).max(5).default([]);
 
+const relationshipValidation=Joi.string().valid("Single", "Married").required().messages({
+  'string.valid': 'Invalid value for relationship Status',
+  'any.required': 'relationship status is required',
+})
+
 const aboutValidation = Joi.string().allow('').optional();
 
 const friendsValidation = Joi.array().items(Joi.string().pattern(/^[0-9a-fA-F]{24}$/)).default([]);
@@ -77,6 +82,7 @@ const userValidationSchema = Joi.object({
   age: ageValidation,
   sex: sexValidation,
   interests: interestsValidation,
+  relationship:relationshipValidation,
   about: aboutValidation,
   friends: friendsValidation,
   pendingFriends: pendingFriendsValidation,
