@@ -24,6 +24,7 @@ const userSchema = new Schema({
       type: [Number],
     },
     address: { type: String },
+    country: { type: String },
   },
   destinationLocation: {
     type: {
@@ -35,10 +36,11 @@ const userSchema = new Schema({
       type: [Number],
     },
     address: { type: String },
+    country: { type: String },
   },
   travelDate: { type: Date },
   age: { type: Number },
-  sex: { type: String, enum: ["Male", "Female", "Non-Binary"] },
+  sex: { type: String, enum: ["Male", "Female", "Null"] },
   interests: {
     type: [
       {

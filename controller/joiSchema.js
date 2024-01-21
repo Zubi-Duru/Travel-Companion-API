@@ -36,6 +36,7 @@ const locationValidation = Joi.object({
   type: Joi.string().valid('Point').default('Point'),
   coordinates: Joi.array().items(Joi.number()).required(),
   address: Joi.string().required(),
+  country: Joi.string().required(),
 });
 
 const travelDateValidation = Joi.date().iso().required().messages({
@@ -49,7 +50,7 @@ const ageValidation = Joi.number().integer().positive().required().messages({
   'any.required': 'Age is required',
 });
 
-const sexValidation = Joi.string().valid('Male', 'Female', 'Non-Binary').required().messages({
+const sexValidation = Joi.string().valid('Male', 'Female', 'Null').required().messages({
   'string.valid': 'Invalid value for sex',
   'any.required': 'Sex is required',
 });
@@ -89,3 +90,4 @@ const userValidationSchema = Joi.object({
 });
 
 module.exports = userValidationSchema;
+

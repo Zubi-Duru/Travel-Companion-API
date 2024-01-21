@@ -8,6 +8,7 @@ const {
   acceptFriendReq,
   removeFriend,
   getPendingFriends,
+  getFriends
 } = require("../controls/friendReqControls");
 
 router.post("/connect-send/:id",isLoggedIn, sendFriendReq);
@@ -15,5 +16,6 @@ router.post("/connect-reject/:id",isLoggedIn, rejectFriendReq);
 router.post("/connect-accept/:id",isLoggedIn, acceptFriendReq);
 router.post("/connect-remove/:id",isLoggedIn, removeFriend);
 router.get("/connect",isLoggedIn, getPendingFriends);
+router.get("/connect-friends",isLoggedIn, getFriends);
 
 module.exports = router;

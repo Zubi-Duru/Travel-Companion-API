@@ -4,9 +4,10 @@ if (process.env.NODE_ENV !== "production") {
 
 const express = require("express");
 const mongoose = require("mongoose");
-const session = require("express-session")
-const MongoDBStore = require('connect-mongodb-session')(session)
-const passport=require("passport")
+const session = require("express-session");
+const MongoDBStore = require("connect-mongodb-session")(session);
+const passport = require("passport");
+const cors = require("cors");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -21,38 +22,41 @@ const connectDb = async () => {
 connectDb();
 
 const store = new MongoDBStore({
-    uri: `${process.env.MONGO_URL}`,
-    collection: 'sessions'
-})
-store.on('error', (error) => {
-    console.log(error, "Session store failed to connect")
-})
+  uri: `${process.env.MONGO_URL}`,
+  collection: "sessions",
+});
+store.on("error", (error) => {
+  console.log(error, "Session store failed to connect");
+});
 sessionConfig = {
-    secret: process.env.SESSION_SECRET,
-    store: store,
-    cookie: {
-        maxAge: 1000 * 60 * 60 * 24 * 7
-    },
-    resave: false,
-    saveUninitialized: true
-}
+  secret: process.env.SESSION_SECRET,
+  store: store,
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24 * 7,
+    secure: process.env.NODE_ENV === "production",
+  },
+  resave: false,
+  saveUninitialized: true,
+};
+
 
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }))
+app.use(express.urlencoded({ extended: true }));
 app.use(session(sessionConfig));
 app.use(passport.initialize());
 app.use(passport.session());
-
+app.use(cors({
+  origin: ["http://localhost:3000"],
+  credentials: true,
+}));
 
 const userRouter = require("./controller/routes/userRoutes");
 const getRelatedUsers = require("./controller/routes/suggestedUsersPQRoute");
 const friendReqRouter = require("./controller/routes/friendReqRoutes");
 const authRouter = require("./controller/routes/authRoutes");
 
-app.get("/check", (req, res) => {
-  res.send(req.user);
-});
+
 app.use("/api/auth", authRouter);
 app.use("/api", userRouter);
 app.use("/api", friendReqRouter);

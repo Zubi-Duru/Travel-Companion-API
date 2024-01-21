@@ -26,12 +26,14 @@ const sendFriendReq = tryCatch(async (req, res) => {
   // Check if the sender user is already friends with the recipient user
   if (
     senderUser.friends.includes(id) ||
-    senderUser.pendingFriends.includes(id)
+    senderUser.pendingFriends.includes(id) ||  recipientUser.friends.includes( senderUserId) ||
+    recipientUser.pendingFriends.includes( senderUserId)
   ) {
     throw {
       custom: { error: "Friend request already sent or already friends" },
     };
   }
+
   // Add the recipient user to the sender user's pendingFriends
   recipientUser.pendingFriends.push(senderUserId);
   await recipientUser.save();
@@ -153,8 +155,27 @@ const getPendingFriends = tryCatch(async (req, res) => {
   res.status(200).json(pendingFriends);
 }, "Could not fetch pending friends");
 
+const getFriends = tryCatch(async (req, res) => {
+  const currentUserID =  req.user._id ; // Assuming you have user information in req.user req.user._id
+  // Validate current user ID
+  if (!mongoose.Types.ObjectId.isValid(currentUserID)) {
+    throw { custom: { error: "Invalid user ID" } };
+  }
+  // Check if the current user exists
+  const currentUser = await User.findById(currentUserID);
+  if (!currentUser) {
+    throw { custom: { error: "Current user not found" } };
+  }
+  // Get the pendingFriends array
+  const friends = await User.find({
+    _id: { $in: currentUser.friends },
+  });
+  res.status(200).json(friends);
+}, "Could not fetch friends");
+
 exports.sendFriendReq = sendFriendReq;
 exports.rejectFriendReq = rejectFriendReq;
 exports.acceptFriendReq = acceptFriendReq;
 exports.removeFriend = removeFriend;
 exports.getPendingFriends = getPendingFriends;
+exports.getFriends=getFriends

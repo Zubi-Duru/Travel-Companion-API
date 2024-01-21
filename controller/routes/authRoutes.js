@@ -17,6 +17,11 @@ passport.use(
 
         // If user does not exist, create a new one
         if (!user) {
+          console.log({
+            username: req.body.username, // Include username from the request
+            email,
+            password, // Hash the password
+          });
           const newUser = new User({
             username: req.body.username, // Include username from the request
             email,
@@ -24,12 +29,18 @@ passport.use(
           });
 
           user = await newUser.save();
-        } else if (!user.verifyPassword(password)) {
+          return done(null, user);
+        } else if (user) {
+          const isCorrectPassword = await user.verifyPassword(password);
           // If the password is incorrect, return an error
-          return done(null, false, { message: "Incorrect email or password" });
+          if (!isCorrectPassword) {
+            return done(null, false, {
+              message: "Incorrect email or password",
+            });
+          } else {
+            return done(null, user);
+          }
         }
-
-        return done(null, user);
       } catch (error) {
         return done(error);
       }
@@ -113,14 +124,13 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
-router.post(
-  "/login",
-  passport.authenticate("local", {
-    successRedirect: "/check",
-    failureRedirect: "/wrong",
-    failureFlash: true,
-  })
-);
+
+router.post("/login", passport.authenticate("local"), (req, res) => {
+
+    console.log(req.user);
+  
+  res.json({ user: req.user });
+});
 
 router.get(
   "/login-google",
@@ -129,9 +139,10 @@ router.get(
 
 router.get(
   "/login-google/callback",
-  passport.authenticate("google", { failureRedirect: "/wrong" }),
+  passport.authenticate("google"),
   (req, res) => {
-    res.redirect("/check");
+    // Redirect user to the client-side route with user ID as a query parameter
+    res.redirect(`http://localhost:3000/profile-setup?userId=${req.user.id}`);
   }
 );
 
@@ -142,15 +153,20 @@ router.get(
 
 router.get(
   "/login-facebook/callback",
-  passport.authenticate("facebook", { failureRedirect: "/wrong" }),
+  passport.authenticate("facebook",{
+    failureRedirect: "http://localhost:3000/login",
+  }),
   (req, res) => {
-    res.redirect("/check");
+    // Redirect user to the client-side route with user ID as a query parameter
+    res.redirect(`http://localhost:3000/profile-setup?userId=${req.user.id}`);
   }
 );
 
-router.get("/logout", (req, res) => {
-  req.logout();
-  res.redirect("/");
+router.post("/logout", (req, res) => {
+  req.session.destroy();
+  req.user = null;
+  res.clearCookie('connect.sid');
+  res.json({ logout: true });
 });
 
 module.exports = router;
