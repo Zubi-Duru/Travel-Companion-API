@@ -20,6 +20,7 @@ exports.isLoggedIn = tryCatch(async (req, res, next) => {
 exports.isProfileOwner = tryCatch(async (req, res, next) => {
   await checkLogin(req);
   const profileOwnerId = req.params.id;
+  console.log(profileOwnerId,req.user._id.toString());
   if (profileOwnerId !== req.user._id.toString()) {
     throw { custom: { error: "You are not the owner of this profile" } };
   }
