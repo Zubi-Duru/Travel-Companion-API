@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
-const { tryCatch } = require("../utils")
-const { User } = require("../../models/userModel");
-const userValidationSchema = require("../joiSchema");
+const { tryCatch } = require("../utils.js")
+const { User } = require("../../models/userModel.js");
+const userValidationSchema = require("../joiSchema.js");
 
 // Add a user
 const addUser = tryCatch(async (req, res) => {

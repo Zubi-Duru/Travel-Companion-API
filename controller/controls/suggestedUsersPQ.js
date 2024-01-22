@@ -1,5 +1,5 @@
 
-const { User } = require("../../models/userModel");
+const { User } = require("../../models/userModel.js");
 const PriorityQueue = require("fastpriorityqueue");
 
 const getRelatedUsers = async (req, res) => {

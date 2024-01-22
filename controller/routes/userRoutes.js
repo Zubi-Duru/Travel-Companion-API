@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { isLoggedIn, isProfileOwner } = require("../middleware");
+const { isLoggedIn, isProfileOwner } = require("../middleware.js");
 
 const {
   addUser,
@@ -8,7 +8,7 @@ const {
   getAllUsers,
   updateUser,
   deleteUser,
-} = require("../controls/userControls");
+} = require("../controls/userControls.js");
 
 router.get("/user/:id", isProfileOwner, getUser);
 router.get("/users/:id", isLoggedIn, getUser);

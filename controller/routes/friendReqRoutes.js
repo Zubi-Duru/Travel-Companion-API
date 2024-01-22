@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { isLoggedIn } = require("../middleware");
+const { isLoggedIn } = require("../middleware.js");
 
 const {
   sendFriendReq,
@@ -9,7 +9,7 @@ const {
   removeFriend,
   getPendingFriends,
   getFriends
-} = require("../controls/friendReqControls");
+} = require("../controls/friendReqControls.js");
 
 router.post("/connect-send/:id",isLoggedIn, sendFriendReq);
 router.post("/connect-reject/:id",isLoggedIn, rejectFriendReq);

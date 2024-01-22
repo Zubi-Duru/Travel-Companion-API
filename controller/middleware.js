@@ -1,5 +1,5 @@
-const { tryCatch } = require("./utils");
-const { User } = require("../models/userModel");
+const { tryCatch } = require("./utils.js");
+const { User } = require("../models/userModel.js");
 
 const checkLogin = async (req) => {
   if (!req.user) {

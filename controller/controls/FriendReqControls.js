@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
-const { tryCatch } = require("../utils");
-const { User } = require("../../models/userModel");
+const { tryCatch } = require("../utils.js");
+const { User } = require("../../models/userModel.js");
 
 const sendFriendReq = tryCatch(async (req, res) => {
   const { id } = req.params;

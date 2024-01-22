@@ -51,10 +51,10 @@ app.use(cors({
   credentials: true,
 }));
 
-const userRouter = require("./controller/routes/userRoutes");
-const getRelatedUsers = require("./controller/routes/suggestedUsersPQRoute");
-const friendReqRouter = require("./controller/routes/friendReqRoutes");
-const authRouter = require("./controller/routes/authRoutes");
+const userRouter = require("./controller/routes/userRoutes.js");
+const getRelatedUsers = require("./controller/routes/suggestedUsersPQRoute.js");
+const friendReqRouter = require("./controller/routes/friendReqRoutes.js");
+const authRouter = require("./controller/routes/authRoutes.js");
 
 
 app.use("/api/auth", authRouter);
