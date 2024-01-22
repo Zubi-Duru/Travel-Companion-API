@@ -47,7 +47,7 @@ app.use(session(sessionConfig));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors({
-  origin: ["http://localhost:3000"],
+  origin: ["https://travel-companion-api-gfjw.onrender.com/api/auth/login"],
   credentials: true,
 }));
 
