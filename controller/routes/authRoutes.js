@@ -112,7 +112,7 @@ passport.use(
 );
 
 passport.serializeUser((user, done) => {
-  console.log(user.id);
+  console.log(user,"hi");
   done(null, user.id);
 });
 
@@ -126,10 +126,7 @@ passport.deserializeUser(async (id, done) => {
 });
 
 
-router.post("/login", passport.authenticate("local"), (req, res) => {
-
-    console.log(req.user);
-  
+router.post("/login", passport.authenticate("local"), (req, res) => {  
   res.json({ user: req.user });
 });
 
