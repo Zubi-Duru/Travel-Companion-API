@@ -112,7 +112,8 @@ passport.use(
 );
 
 passport.serializeUser((user, done) => {
-  done(null, user._id);
+  console.log(user.id);
+  done(null, user.id);
 });
 
 passport.deserializeUser(async (id, done) => {
