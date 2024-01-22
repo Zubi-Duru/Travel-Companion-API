@@ -140,11 +140,11 @@ router.get(
 router.get(
   "/login-google/callback",
   passport.authenticate("google",{
-    failureRedirect: "https://travel-companion-henna.vercel.app/login",
+    failureRedirect: `${process.env.HOST_URL}/login`,
   }),
   (req, res) => {
     // Redirect user to the client-side route with user ID as a query parameter
-    res.redirect(`https://travel-companion-henna.vercel.app//profile-setup?userId=${req.user.id}`);
+    res.redirect(`${process.env.HOST_URL}/profile-setup?userId=${req.user.id}`);
   }
 );
 
@@ -156,11 +156,11 @@ router.get(
 router.get(
   "/login-facebook/callback",
   passport.authenticate("facebook",{
-    failureRedirect: "https://travel-companion-henna.vercel.app/login",
+    failureRedirect: `${process.env.HOST_URL}/login`,
   }),
   (req, res) => {
     // Redirect user to the client-side route with user ID as a query parameter
-    res.redirect(`https://travel-companion-henna.vercel.app/profile-setup?userId=${req.user.id}`);
+    res.redirect(`${process.env.HOST_URL}/profile-setup?userId=${req.user.id}`);
   }
 );
 
