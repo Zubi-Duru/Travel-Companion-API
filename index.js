@@ -39,7 +39,7 @@ sessionConfig = {
     maxAge: 1000 * 60 * 60 * 24 * 7,
     secure: process.env.NODE_ENV === "production",
     // domain:"https://travel-companion-henna.vercel.app",
-    sameSite:false
+    sameSite:"none"
   },
   resave: false,
   saveUninitialized: true,
