@@ -32,10 +32,10 @@ sessionConfig = {
   secret: process.env.SESSION_SECRET,
   store: store,
   cookie: {
-    httpOnly: true,
+    httpOnly: false,
     maxAge: 1000 * 60 * 60 * 24 * 7,
     secure: process.env.NODE_ENV === "production",
-    domain:`${process.env.SERVER_URL}`
+    sameSite:"none"
   },
   resave: false,
   saveUninitialized: true,
