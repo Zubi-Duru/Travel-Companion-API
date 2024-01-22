@@ -31,12 +31,13 @@ store.on("error", (error) => {
 sessionConfig = {
   secret: process.env.SESSION_SECRET,
   store: store,
-  Proxy: true,
+  proxy: true,
   name: "goldjsx",
   cookie: {
-    httpOnly: false,
+    httpOnly: true,
     maxAge: 1000 * 60 * 60 * 24 * 7,
     secure: process.env.NODE_ENV === "production",
+    domain:"https://travel-companion-henna.vercel.app",
     sameSite:"none"
   },
   resave: false,
@@ -44,7 +45,7 @@ sessionConfig = {
 };
 
 app.set("trust proxy",1)
-
+console.log("jk");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(session(sessionConfig));
