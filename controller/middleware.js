@@ -13,7 +13,7 @@ const checkLogin = async (req) => {
 };
 
 exports.isLoggedIn = tryCatch(async (req, res, next) => {
-  console.log(req.user,"check logim");
+  console.log(req.user,"check login");
   // await checkLogin(req);
   next();
 }, "You must be logged in");
