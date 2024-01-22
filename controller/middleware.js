@@ -14,18 +14,18 @@ const checkLogin = async (req) => {
 
 exports.isLoggedIn = tryCatch(async (req, res, next) => {
   console.log(req.user,"check login");
-  // await checkLogin(req);
+  await checkLogin(req);
   next();
 }, "You must be logged in");
 
 exports.isProfileOwner = tryCatch(async (req, res, next) => {
   const profileOwnerId = req.params.id;
   console.log(profileOwnerId,req.user._id.toString());
-  // await checkLogin(req);
+  await checkLogin(req);
 
-  // if (profileOwnerId !== req.user._id.toString()) {
-  //   throw { custom: { error: "You are not the owner of this profile" } };
-  // }
+  if (profileOwnerId !== req.user._id.toString()) {
+    throw { custom: { error: "You are not the owner of this profile" } };
+  }
 
   next();
 }, "You must be the owner of this profile");
