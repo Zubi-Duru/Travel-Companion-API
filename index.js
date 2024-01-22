@@ -37,15 +37,15 @@ sessionConfig = {
     httpOnly: true,
     maxAge: 1000 * 60 * 60 * 24 * 7,
     secure: process.env.NODE_ENV === "production",
-    domain:"https://travel-companion-henna.vercel.app",
-    sameSite:"false"
+    // domain:"https://travel-companion-henna.vercel.app",
+    sameSite:false
   },
   resave: false,
   saveUninitialized: true,
 };
 
 app.set("trust proxy",1)
-console.log("jk");
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(session(sessionConfig));
