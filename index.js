@@ -31,6 +31,7 @@ store.on("error", (error) => {
 sessionConfig = {
   secret: process.env.SESSION_SECRET,
   store: store,
+  Proxy: true,
   cookie: {
     httpOnly: false,
     maxAge: 1000 * 60 * 60 * 24 * 7,
@@ -41,6 +42,7 @@ sessionConfig = {
   saveUninitialized: true,
 };
 
+app.set("trust proxy",1)
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
