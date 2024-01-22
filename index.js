@@ -32,13 +32,13 @@ sessionConfig = {
   secret: process.env.SESSION_SECRET,
   store: store,
   cookie: {
+    httpOnly: true,
     maxAge: 1000 * 60 * 60 * 24 * 7,
     secure: process.env.NODE_ENV === "production",
   },
   resave: false,
   saveUninitialized: true,
 };
-
 
 
 app.use(express.json());
@@ -48,8 +48,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors({
   origin: ["https://travel-companion-api-gfjw.onrender.com","http://localhost:3000"],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 }));
+
 
 const userRouter = require("./controller/routes/userRoutes.js");
 const getRelatedUsers = require("./controller/routes/suggestedUsersPQRoute.js");
