@@ -17,11 +17,6 @@ passport.use(
 
         // If user does not exist, create a new one
         if (!user) {
-          console.log({
-            username: req.body.username, // Include username from the request
-            email,
-            password, // Hash the password
-          });
           const newUser = new User({
             username: req.body.username, // Include username from the request
             email,
@@ -112,7 +107,7 @@ passport.use(
 );
 
 passport.serializeUser((user, done) => {
-  console.log(user,"hi");
+  console.log(user,"hiii");
   done(null, user.id);
 });
 
