@@ -32,6 +32,7 @@ sessionConfig = {
   secret: process.env.SESSION_SECRET,
   store: store,
   Proxy: true,
+  name: "goldjsx",
   cookie: {
     httpOnly: false,
     maxAge: 1000 * 60 * 60 * 24 * 7,
