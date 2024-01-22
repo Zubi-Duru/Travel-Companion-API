@@ -10,7 +10,7 @@ const {
   deleteUser,
 } = require("../controls/userControls.js");
 
-router.get("/user/:id", isProfileOwner, getUser);
+router.get("/user/:id",  getUser);
 router.get("/users/:id", isLoggedIn, getUser);
 router.get("/users", isLoggedIn, getAllUsers);
 router.post("/users", addUser);
