@@ -9,7 +9,7 @@ const {
   removeFriend,
   getPendingFriends,
   getFriends
-} = require("../controls/friendReqControls.js");
+} = require("../controls/friendControls.js");
 
 router.post("/connect-send/:id",isLoggedIn, sendFriendReq);
 router.post("/connect-reject/:id",isLoggedIn, rejectFriendReq);

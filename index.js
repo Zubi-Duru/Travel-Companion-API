@@ -53,7 +53,7 @@ app.use(cors({
 
 const userRouter = require("./controller/routes/userRoutes.js");
 const getRelatedUsers = require("./controller/routes/suggestedUsersPQRoute.js");
-const friendReqRouter = require("./controller/routes/friendReqRoutes.js");
+const friendReqRouter = require("./controller/routes/friendRoutes.js");
 const authRouter = require("./controller/routes/authRoutes.js");
 
 
