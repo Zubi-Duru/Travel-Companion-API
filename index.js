@@ -47,7 +47,7 @@ app.use(session(sessionConfig));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors({
-  origin: ["https://travel-companion-api-gfjw.onrender.com/api/auth/login"],
+  origin: ["https://travel-companion-henna.vercel.app"],
   credentials: true,
 }));
 
