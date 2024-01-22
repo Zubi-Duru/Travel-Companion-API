@@ -10,6 +10,7 @@ const passport = require("passport");
 const cors = require("cors");
 
 const app = express();
+app.set("trust proxy",1)
 const port = process.env.PORT || 3000;
 
 const connectDb = async () => {
@@ -44,7 +45,7 @@ sessionConfig = {
   saveUninitialized: true,
 };
 
-app.set("trust proxy",1)
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
