@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const { tryCatch } = require("../utils");
 const { User } = require("../../models/userModel");
-const userValidationSchema = require("../joiSchema");
 
 const sendFriendReq = tryCatch(async (req, res) => {
   const { id } = req.params;

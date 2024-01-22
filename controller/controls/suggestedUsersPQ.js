@@ -1,4 +1,4 @@
-const { tryCatch } = require("../utils");
+
 const { User } = require("../../models/userModel");
 const PriorityQueue = require("fastpriorityqueue");
 
