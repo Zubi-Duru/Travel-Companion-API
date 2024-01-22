@@ -18,9 +18,10 @@ exports.isLoggedIn = tryCatch(async (req, res, next) => {
 }, "You must be logged in");
 
 exports.isProfileOwner = tryCatch(async (req, res, next) => {
-  await checkLogin(req);
   const profileOwnerId = req.params.id;
   console.log(profileOwnerId,req.user._id.toString());
+  await checkLogin(req);
+
   if (profileOwnerId !== req.user._id.toString()) {
     throw { custom: { error: "You are not the owner of this profile" } };
   }
