@@ -112,7 +112,7 @@ passport.use(
 );
 
 passport.serializeUser((user, done) => {
-  done(null, user.id);
+  done(null, user._id);
 });
 
 passport.deserializeUser(async (id, done) => {
@@ -139,10 +139,12 @@ router.get(
 
 router.get(
   "/login-google/callback",
-  passport.authenticate("google"),
+  passport.authenticate("google",{
+    failureRedirect: "https://travel-companion-henna.vercel.app/login",
+  }),
   (req, res) => {
     // Redirect user to the client-side route with user ID as a query parameter
-    res.redirect(`http://localhost:3000/profile-setup?userId=${req.user.id}`);
+    res.redirect(`https://travel-companion-henna.vercel.app//profile-setup?userId=${req.user.id}`);
   }
 );
 
@@ -154,11 +156,11 @@ router.get(
 router.get(
   "/login-facebook/callback",
   passport.authenticate("facebook",{
-    failureRedirect: "http://localhost:3000/login",
+    failureRedirect: "https://travel-companion-henna.vercel.app/login",
   }),
   (req, res) => {
     // Redirect user to the client-side route with user ID as a query parameter
-    res.redirect(`http://localhost:3000/profile-setup?userId=${req.user.id}`);
+    res.redirect(`https://travel-companion-henna.vercel.app/profile-setup?userId=${req.user.id}`);
   }
 );
 
