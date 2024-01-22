@@ -35,6 +35,7 @@ sessionConfig = {
     httpOnly: true,
     maxAge: 1000 * 60 * 60 * 24 * 7,
     secure: process.env.NODE_ENV === "production",
+    domain:"https://travel-companion-api-gfjw.onrender.com/"
   },
   resave: false,
   saveUninitialized: true,
@@ -47,8 +48,7 @@ app.use(session(sessionConfig));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors({
-  origin: ["https://travel-companion-api-gfjw.onrender.com","http://localhost:3000"],
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  origin: "https://travel-companion-henna.vercel.app/",
   credentials: true,
 }));
 
