@@ -21,6 +21,7 @@ const connectDb = async () => {
   });
 };
 connectDb();
+console.log("abc");
 
 const store = new MongoDBStore({
   uri: `${process.env.MONGO_URL}`,
