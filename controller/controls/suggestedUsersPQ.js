@@ -3,7 +3,7 @@ const { User } = require("../../models/userModel.js");
 const PriorityQueue = require("fastpriorityqueue");
 
 const getRelatedUsers = async (req, res) => {
-  const currentUserId = req.user._id;
+  const currentUserId = req.user;
 
   const lat = Number(parseFloat(req.query.lat).toFixed(2));
   const lng = Number(parseFloat(req.query.lng).toFixed(2));

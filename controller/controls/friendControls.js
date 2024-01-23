@@ -4,7 +4,7 @@ const { User } = require("../../models/userModel.js");
 
 const sendFriendReq = tryCatch(async (req, res) => {
   const { id } = req.params;
-  const senderUserId =  req.user._id; // Assuming you have user information in req.user
+  const senderUserId =  req.user; // Assuming you have user information in req.user
   // Validate user ID and sender user ID
   if (
     !mongoose.Types.ObjectId.isValid(id) ||
@@ -42,7 +42,7 @@ const sendFriendReq = tryCatch(async (req, res) => {
 
 const rejectFriendReq = tryCatch(async (req, res) => {
   const { id } = req.params;
-  const currentUserID = req.user._id; // Assuming you have user information in req.user
+  const currentUserID = req.user; // Assuming you have user information in req.user
   // Validate user ID and current user ID
   if (
     !mongoose.Types.ObjectId.isValid(id) ||
@@ -68,7 +68,7 @@ const rejectFriendReq = tryCatch(async (req, res) => {
 
 const acceptFriendReq = tryCatch(async (req, res) => {
   const { id } = req.params;
-  const currentUserID =  req.user._id; // Assuming you have user information in req.user
+  const currentUserID =  req.user; // Assuming you have user information in req.user
   // Validate user ID and current user ID
   if (
     !mongoose.Types.ObjectId.isValid(id) ||
@@ -102,7 +102,7 @@ const acceptFriendReq = tryCatch(async (req, res) => {
 
 const removeFriend = tryCatch(async (req, res) => {
   const { id } = req.params;
-  const currentUserID = req.user._id; // Assuming you have user information in req.user
+  const currentUserID = req.user; // Assuming you have user information in req.user
   // Validate user ID and current user ID
   if (
     !mongoose.Types.ObjectId.isValid(id) ||
@@ -137,7 +137,7 @@ const removeFriend = tryCatch(async (req, res) => {
 }, "Could not remove friend");
 
 const getPendingFriends = tryCatch(async (req, res) => {
-  const currentUserID =  req.user._id ; // Assuming you have user information in req.user req.user._id
+  const currentUserID =  req.user ; // Assuming you have user information in req.user req.user
   // Validate current user ID
   if (!mongoose.Types.ObjectId.isValid(currentUserID)) {
     throw { custom: { error: "Invalid user ID" } };
@@ -155,7 +155,7 @@ const getPendingFriends = tryCatch(async (req, res) => {
 }, "Could not fetch pending friends");
 
 const getFriends = tryCatch(async (req, res) => {
-  const currentUserID =  req.user._id ; // Assuming you have user information in req.user req.user._id
+  const currentUserID =  req.user ; // Assuming you have user information in req.user req.user
   // Validate current user ID
   if (!mongoose.Types.ObjectId.isValid(currentUserID)) {
     throw { custom: { error: "Invalid user ID" } };

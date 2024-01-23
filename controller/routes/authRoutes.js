@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-
+const jwt = require("jsonwebtoken");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
@@ -107,7 +107,7 @@ passport.use(
 );
 
 passport.serializeUser((user, done) => {
-  console.log(user,"hiii");
+  console.log(user, "hiii");
   done(null, user.id);
 });
 
@@ -120,10 +120,22 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
-
-router.post("/login", passport.authenticate("local"), (req, res) => {  
-  res.json({ user: req.user });
-});
+router.post(
+  "/login",
+  passport.authenticate("local", { session: false }),
+  (req, res) => {
+    try {
+      // Generate a JWT token upon successful local authentication
+      const token = jwt.sign({ userId: req.user.id }, process.env.JWT_SECRET, {
+        expiresIn: "1h", // Set the expiration time for the token
+      });
+      console.log(token);
+      res.json({ user: req.user, token });
+    } catch (error) {
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  }
+);
 
 router.get(
   "/login-google",
@@ -132,14 +144,32 @@ router.get(
 
 router.get(
   "/login-google/callback",
-  passport.authenticate("google",{
+  passport.authenticate("google", {
     failureRedirect: `${process.env.HOST_URL}/login`,
   }),
   (req, res) => {
-    // Redirect user to the client-side route with user ID as a query parameter
-    res.redirect(`${process.env.HOST_URL}/profile-setup?userId=${req.user.id}`);
+    try {
+      // Generate a JWT token upon successful Google authentication
+      const token = jwt.sign({ userId: req.user.id }, process.env.JWT_SECRET, {
+        expiresIn: '1h', // Set the expiration time for the token
+      });
+
+      // Redirect user to the client-side route with user ID
+      const htmlTokenEmbed = `
+        <html>
+          <script>
+            window.localStorage.setItem('token', '${token}');
+            window.location.href = '${process.env.HOST_URL}/profile-setup?userId=${req.user.id}';
+          </script>
+        </html>
+      `;
+      res.send(htmlTokenEmbed);
+    } catch (error) {
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
   }
 );
+
 
 router.get(
   "/login-facebook",
@@ -148,19 +178,36 @@ router.get(
 
 router.get(
   "/login-facebook/callback",
-  passport.authenticate("facebook",{
+  passport.authenticate("facebook", {
     failureRedirect: `${process.env.HOST_URL}/login`,
   }),
   (req, res) => {
-    // Redirect user to the client-side route with user ID as a query parameter
-    res.redirect(`${process.env.HOST_URL}/profile-setup?userId=${req.user.id}`);
+    try {
+      // Generate a JWT token upon successful Facebook authentication
+      const token = jwt.sign({ userId: req.user.id }, process.env.JWT_SECRET, {
+        expiresIn: "1h", // Set the expiration time for the token
+      });
+
+      // Redirect user to the client-side route with user ID and set token
+      const htmlTokenEmbed = `
+      <html>
+        <script>
+          window.localStorage.setItem('token', '${token}');
+          window.location.href = '${process.env.HOST_URL}/profile-setup?userId=${req.user.id}';
+        </script>
+      </html>
+    `;
+      res.send(htmlTokenEmbed);
+    } catch (error) {
+      res.status(500).json({ error: "Internal Server Error" });
+    }
   }
 );
 
 router.post("/logout", (req, res) => {
-  req.session.destroy();
-  req.user = null;
-  res.clearCookie('connect.sid');
+  // req.session.destroy();
+  // req.user = null;
+  // res.clearCookie('connect.sid');
   res.json({ logout: true });
 });
 
